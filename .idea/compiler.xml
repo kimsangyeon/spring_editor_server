@@ -25,8 +25,8 @@
         <module name="spring_editor" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="spring_editor" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="spring_editor" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
