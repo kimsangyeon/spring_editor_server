@@ -16,6 +16,9 @@
     <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
     <mvc:resources mapping="/resources/js/**" location="/WEB-INF/resources/js/" />
     <mvc:resources mapping="/resources/media/**" location="/WEB-INF/resources/media/" />
+    <mvc:resources mapping="/resources/doc/**" location="/WEB-INF/resources/doc/" />
+    <mvc:resources mapping="/resources/doc/unzip/**" location="/WEB-INF/resources/doc/unzip" />
+    <mvc:resources mapping="/resources/doc/zip/**" location="/WEB-INF/resources/doc/zip" />
 
     <context:component-scan base-package="Controller"></context:component-scan> <!-- Component 패키지 지정 -->
 
