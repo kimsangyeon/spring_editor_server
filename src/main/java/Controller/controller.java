@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -97,7 +98,7 @@ public class controller {
                 HttpMethod.POST, requestEntity, byte[].class);
 
         String pbFilePath = unzipFile(response.getBody());
-        List<Integer> serializedData = serializePbData(pbFilePath);
+        Integer[] serializedData = serializePbData(pbFilePath);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("serializedData", serializedData);
@@ -129,7 +130,7 @@ public class controller {
         if(!dir.exists()) dir.mkdirs();
         FileInputStream fis;
         //buffer for read and write data to file
-        byte[] buffer = new byte[8092];
+        byte[] buffer = new byte[1024];
         try {
             fis = new FileInputStream(zipFilePath);
             ZipInputStream zis = new ZipInputStream(fis);
@@ -160,19 +161,30 @@ public class controller {
 
     }
 
-    public List<Integer> serializePbData(String pbFilePath) throws IOException {
+    public Integer[] serializePbData(String pbFilePath) throws IOException {
         List<Integer> serializedData = new ArrayList<Integer>();
-        File pbFile =  new File(pbFilePath);
-        RandomAccessFile raf = new RandomAccessFile(pbFile, "rw");
-        final byte[] buf = new byte[(int) raf.length()];
-        raf.read(buf);
+        FileInputStream fis = new FileInputStream(pbFilePath);
 
-        for (int i = 16; i < buf.length; i++) {
-            serializedData.add((Integer) (buf[i] & 0xFF));
+        Integer[] data = null;
+
+        fis.skip(16);
+
+        InflaterInputStream ifis = new InflaterInputStream(fis);
+
+        byte[] buffer = new byte[1024];
+
+        int len = -1;
+        while ((len = ifis.read(buffer)) != -1) {
+            for (int i = 0; i < len; i++) {
+                serializedData.add(buffer[i] & 0xFF);
+            }
         }
-        raf.write(buf);
-        raf.close();
 
-        return serializedData;
+        data = serializedData.toArray(new Integer[serializedData.size()]);
+
+        ifis.close();
+        fis.close();
+
+        return data;
     }
 }
