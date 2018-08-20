@@ -34,7 +34,7 @@ public class controller {
     static String UPLOAD_PATH_DOC = "/Users/kimsangyeon/workspace/spring_editor/web/WEB-INF/resources/doc";
     static String UPLOAD_PATH_ZIP = "/Users/kimsangyeon/workspace/spring_editor/web/WEB-INF/resources/doc/zip";
     static String UPLOAD_PATH_UNZIP = "/Users/kimsangyeon/workspace/spring_editor/web/WEB-INF/resources/doc/unzip";
-    static String API_SERVER = "http://synapeditor.iptime.org:3000";
+    static String API_SERVER = "http://synapeditor.iptime.org:7419";
 
     private static final long BEGINING_POSITION_OF_XOR_SECTION = 4L;
 
